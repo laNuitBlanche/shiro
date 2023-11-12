@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Tag {
+  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  tagId        String    @default(uuid()) @map("tag_id")
+  name         String    @db.VarChar(100)
+  type         Int       @db.TinyInt
+  createdTime  DateTime? @default(now()) @map("created_time")
+  modifiedTime DateTime? @updatedAt @map("modified_time")
+  deletedTime  DateTime? @map("deleted_time")
+  createdBy    Int       @map("created_by") @db.UnsignedInt
+  modifiedBy   Int?      @map("modified_by") @db.UnsignedInt
+  deletedBy    Int?      @map("deleted_by") @db.UnsignedInt
+  isDel        Int?      @default(1) @map("is_del") @db.UnsignedTinyInt // 1: 未删除 0:已删除
+  enabled      Int?      @default(1) @db.UnsignedTinyInt
+
+  @@unique([tagId])
+  @@index([tagId])
+  @@map("tag")
+}
+
+model Category {
+  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  categoryId   String    @default(uuid()) @map("category_id")
+  name         String    @db.VarChar(100)
+  type         Int       @db.TinyInt
+  createdTime  DateTime  @default(now()) @map("created_time")
+  modifiedTime DateTime? @updatedAt @map("modified_time")
+  deletedTime  DateTime? @map("deleted_time")
+  createdBy    Int       @map("created_by") @db.UnsignedInt
+  modifiedBy   Int?      @map("modified_by") @db.UnsignedInt
+  deletedBy    Int?      @map("deleted_by") @db.UnsignedInt
+  isDel        Int       @default(1) @map("is_del") @db.UnsignedTinyInt // 1: 未删除 0:已删除
+  enabled      Int       @default(1) @db.UnsignedTinyInt // 1:启用 0:禁用
+  editable     Int       @default(1) @db.UnsignedTinyInt // 1:可编辑 0：不可编辑
+
+  @@unique([categoryId])
+  @@index([categoryId])
+  @@map("category")
+}
+
+model Article {
+  id            Int       @id @default(autoincrement()) @db.UnsignedInt
+  articleId     String    @default(uuid()) @map("article_id")
+  title         String    @db.VarChar(100)
+  desc          String?   @db.VarChar(255)
+  summary       String?   @db.VarChar(255)
+  coverImageUrl String?   @map("cover_image_url") @db.VarChar(255)
+  content       String    @db.LongText
+  categoryId    String    @map("category_id")
+  encryption    Int?      @default(0) @db.UnsignedTinyInt
+  password      String?   @db.VarChar(32)
+  weight        Int?      @default(0) @db.UnsignedInt
+  createdTime   DateTime  @default(now()) @map("created_time")
+  modifiedTime  DateTime? @updatedAt @map("modified_time")
+  deletedTime   DateTime? @map("deleted_time")
+  createdBy     Int       @map("created_by") @db.UnsignedInt
+  modifiedBy    Int?      @map("modified_by") @db.UnsignedInt
+  deletedBy     Int?      @map("deleted_by") @db.UnsignedInt
+  isTop         Int       @default(1) @map("is_top") @db.UnsignedTinyInt
+  isDel         Int       @default(1) @map("is_del") @db.UnsignedTinyInt
+  isPublished   Int       @default(1) @map("is_published") @db.UnsignedTinyInt
+  enabled       Int       @default(1) @db.UnsignedTinyInt
+
+  @@unique([articleId])
+  @@index([articleId])
+  @@map("article")
+}
