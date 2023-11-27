@@ -32,6 +32,26 @@ export class ArticleService {
     });
   }
 
+  // async articlesWithTags(params: {
+  //   skip?: number;
+  //   take?: number;
+  //   cursor?: Prisma.ArticleWhereUniqueInput;
+  //   where?: Prisma.ArticleWhereInput;
+  //   orderBy?: Prisma.ArticleOrderByWithRelationInput;
+  // }): Promise<Article[]> {
+  //   const { skip, take, cursor, where, orderBy } = params;
+  //   return await this.prisma.article.findMany({
+  //     include: {
+  //       tags: true,
+  //     },
+  //     skip,
+  //     take,
+  //     cursor,
+  //     where,
+  //     orderBy,
+  //   });
+  // }
+
   async createArticle(params: Prisma.ArticleCreateInput): Promise<Article> {
     return await this.prisma.article.create({
       data: params,

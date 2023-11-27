@@ -52,9 +52,6 @@ export class TagController {
     if (tag) {
       throw new Error('标签名称重复啦，请换一个～');
     }
-    if (tag.name === createTagDto.name) {
-      throw new Error('标签名称重复啦，请换一个～');
-    }
 
     return await this.tagService.createTag({
       ...createTagDto,
@@ -66,12 +63,12 @@ export class TagController {
   @Put(':id')
   async updateTag(
     @Param('id') tagId: string,
-    params: UpdateTagDto,
+    @Body() updateTagDto: UpdateTagDto,
   ): Promise<TagModel> {
     return await this.tagService.updateTag({
       where: { tagId: tagId },
       data: {
-        ...params,
+        ...updateTagDto,
         // TODO
         modifiedBy: 0,
       },
@@ -81,7 +78,7 @@ export class TagController {
   @Delete(':id')
   async deleteTag(@Param('id') tagId: string): Promise<TagModel> {
     return await this.tagService.deleteTag({
-      where: { tagId: tagId },
+      where: { tagId },
       data: {
         // TODO
         deletedBy: 0,

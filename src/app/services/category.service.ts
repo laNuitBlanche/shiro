@@ -32,6 +32,14 @@ export class CategoryService {
     });
   }
 
+  async queryExistCategory(
+    categoryWhereInput: Prisma.CategoryWhereInput,
+  ): Promise<Category | null> {
+    return await this.prisma.category.findFirst({
+      where: categoryWhereInput,
+    });
+  }
+
   async createCategory(params: Prisma.CategoryCreateInput): Promise<Category> {
     return await this.prisma.category.create({
       data: params,

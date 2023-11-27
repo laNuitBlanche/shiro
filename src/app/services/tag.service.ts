@@ -71,7 +71,7 @@ export class TagService {
       tagId: params.where.tagId,
     });
     if (!tag) {
-      throw new Error('标签可能被其他人删除了哦');
+      throw new Error('标签已经被删除了哦');
     }
     const { where, data } = params;
     return this.prisma.tag.update({
