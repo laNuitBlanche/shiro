@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Res,
 } from '@nestjs/common';
 import { TagService } from '../services/tag.service';
 import { CreateTagDto, UpdateTagDto, QueryTagsDto } from '../dto/tag.dto';
@@ -18,8 +19,8 @@ export class TagController {
   constructor(readonly tagService: TagService) {}
 
   @Get('/list')
-  async queryTags(@Query() query: QueryTagsDto) {
-    return await this.tagService.tags({
+  async queryTags(@Query() query: QueryTagsDto, @Res() res) {
+    const data = await this.tagService.tags({
       where: {
         OR: [
           {
@@ -40,6 +41,7 @@ export class TagController {
         ],
       },
     });
+    res.jsonData(data, '000000', 'success');
   }
 
   @Post()

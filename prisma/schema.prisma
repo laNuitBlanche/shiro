@@ -101,10 +101,10 @@ model Article {
   @@map("article")
 }
 
-model ArticleTag {
-  id        Int @id @default(autoincrement()) @db.UnsignedInt
-  articleId Int @map("article_id")
-  tagId     Int @map("tag_id")
+// model ArticleTag {
+//   id        Int @id @default(autoincrement()) @db.UnsignedInt
+//   articleId Int @map("article_id")
+//   tagId     Int @map("tag_id")
 
-  @@map("article_tag")
-}
+//   @@map("article_tag")
+// }
